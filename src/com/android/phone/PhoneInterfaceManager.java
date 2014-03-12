@@ -556,7 +556,9 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
     }
 
     public boolean isRadioOn() {
-        return mPhone.getServiceState().getVoiceRegState() != ServiceState.STATE_POWER_OFF;
+      //  return mPhone.getServiceState().getVoiceRegState() != ServiceState.STATE_POWER_OFF;
+	  return mPhone.getServiceState().getVoiceRegState() != ServiceState.STATE_POWER_OFF
+	  && (mPhone.getServiceState().getVoiceRegState() != ServiceState.STATE_OUT_OF_SERVICE);
     }
 
     public void toggleRadioOnOff() {
