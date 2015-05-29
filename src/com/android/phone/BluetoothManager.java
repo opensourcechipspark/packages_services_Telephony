@@ -219,6 +219,12 @@ public class BluetoothManager implements CallModeler.Listener {
                                                                  mCallManager);
 
         notifyListeners(mShowBluetoothIndication);
+    //add by xxh
+		if(mShowBluetoothIndication){
+		 mCallManager.setBluetoothOn(true);
+	    }else if(mBluetoothHeadsetState == BluetoothProfile.STATE_DISCONNECTED){
+		 mCallManager.setBluetoothOn(false);
+	   }
     }
 
     public void addBluetoothIndicatorListener(BluetoothIndicatorListener listener) {
@@ -354,6 +360,7 @@ public class BluetoothManager implements CallModeler.Listener {
         if (mBluetoothHeadset != null) {
             // TODO(BT) check return
             mBluetoothHeadset.connectAudio();
+            mCallManager.setBluetoothOn(true);
         }
 
         // Watch out: The bluetooth connection doesn't happen instantly;
@@ -369,6 +376,7 @@ public class BluetoothManager implements CallModeler.Listener {
         if (VDBG) log("disconnectBluetoothAudio()...");
         if (mBluetoothHeadset != null) {
             mBluetoothHeadset.disconnectAudio();
+			mCallManager.setBluetoothOn(false);
         }
         mBluetoothConnectionPending = false;
     }

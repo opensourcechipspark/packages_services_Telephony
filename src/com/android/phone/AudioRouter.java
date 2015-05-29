@@ -272,8 +272,10 @@ import java.util.List;
 
             if (onOff && !isAlreadyOn) {
                 mBluetoothManager.connectBluetoothAudio();
+				mCallManager.setBluetoothOn(true);
             } else if (!onOff && isAlreadyOn) {
                 mBluetoothManager.disconnectBluetoothAudio();
+				mCallManager.setBluetoothOn(false);
             }
         } else if (onOff) {
             Log.e(LOG_TAG, "Asking to turn on bluetooth, but there is no bluetooth availabled.");
@@ -289,7 +291,9 @@ import java.util.List;
     private void turnOnOffSpeaker(boolean onOff) {
         if (PhoneUtils.isSpeakerOn(mContext) != onOff) {
             PhoneUtils.turnOnSpeaker(mContext, onOff, true /* storeState */);
+
         }
+	     
     }
 
     private void init() {

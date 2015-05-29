@@ -96,7 +96,7 @@ public class PhoneGlobals extends ContextWrapper implements WiredHeadsetListener
      *
      * ***** DO NOT SUBMIT WITH DBG_LEVEL > 0 *************
      */
-    /* package */ static final int DBG_LEVEL = 0;
+    /* package */ static final int DBG_LEVEL = 2;
 
     private static final boolean DBG =
             (PhoneGlobals.DBG_LEVEL >= 1) && (SystemProperties.getInt("ro.debuggable", 0) == 1);
@@ -447,7 +447,7 @@ public class PhoneGlobals extends ContextWrapper implements WiredHeadsetListener
 
             CallLogger callLogger = new CallLogger(this, new CallLogAsync());
 
-            callGatewayManager = new CallGatewayManager();
+            callGatewayManager = CallGatewayManager.getInstance();
 
             // Create the CallController singleton, which is the interface
             // to the telephony layer for user-initiated telephony functionality
@@ -489,7 +489,8 @@ public class PhoneGlobals extends ContextWrapper implements WiredHeadsetListener
             callHandlerServiceProxy = new CallHandlerServiceProxy(this, callModeler,
                     callCommandService, audioRouter);
 
-            phoneMgr = PhoneInterfaceManager.init(this, phone, callHandlerServiceProxy);
+            phoneMgr = PhoneInterfaceManager.init(this, phone, callHandlerServiceProxy, callModeler,
+                    dtmfTonePlayer);
 
             // Create the CallNotifer singleton, which handles
             // asynchronous events from the telephony layer (like
